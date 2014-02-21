@@ -124,17 +124,18 @@ private static final Logger _logger = LoggerFactory.getLogger(StencilSetServiceS
             input = stencilset.getContents();
             resp.setContentType("application/json");
         }
-        
-        try {
-            byte[] buffer = new byte[4096];
-            int read;
-            while ((read = input.read(buffer)) != -1) {
-                resp.getOutputStream().write(buffer, 0, read);
+        if (input != null) {
+            try {
+                byte[] buffer = new byte[4096];
+                int read;
+                while ((read = input.read(buffer)) != -1) {
+                    resp.getOutputStream().write(buffer, 0, read);
+                }
+            } catch (IOException e) {
+                _logger.error(e.getMessage(), e);
+            } finally {
+                if (input != null) { try { input.close(); } catch(IOException e) {}};
             }
-        } catch (IOException e) {
-            _logger.error(e.getMessage(), e);
-        } finally {
-            if (input != null) { try { input.close(); } catch(IOException e) {}};
         }
-        }
+    }
 }

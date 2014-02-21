@@ -1,6 +1,10 @@
 package org.jbpm.designer.repository;
 
+import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.URIException;
+import org.jbpm.designer.util.Base64Backport;
 
 public class UriUtils {
 
@@ -30,5 +34,20 @@ public class UriUtils {
             throw new IllegalArgumentException("Invalid value " + value + " given, error: " + e.getMessage(), e);
         }
 
+    }
+
+    public static String base64Decode(String uniqueId) {
+        if (uniqueId != null && Base64Backport.isBase64(uniqueId)) {
+            byte[] decoded = Base64.decodeBase64(uniqueId);
+            try {
+                String uri = new String(decoded, "UTF-8");
+
+                return uri;
+            } catch (UnsupportedEncodingException e) {
+
+            }
+        }
+
+        return uniqueId;
     }
 }

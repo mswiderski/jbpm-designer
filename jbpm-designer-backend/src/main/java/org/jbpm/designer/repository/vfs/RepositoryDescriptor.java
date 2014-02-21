@@ -1,6 +1,7 @@
 package org.jbpm.designer.repository.vfs;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +12,10 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
+import org.jbpm.designer.repository.UriUtils;
 import org.jbpm.designer.server.service.PathEvent;
+import org.jbpm.designer.util.Base64Backport;
 import org.uberfire.java.nio.file.FileSystem;
 import org.uberfire.java.nio.file.Path;
 
@@ -96,6 +100,7 @@ public class  RepositoryDescriptor {
                 uuid = path;
             }
             if (uuid != null) {
+                uuid = UriUtils.base64Decode(uuid);
                 // git based pattern
                 Pattern pattern = Pattern.compile("@(.*?)/");
                 if (uuid.indexOf("@") == -1) {

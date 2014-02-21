@@ -164,7 +164,9 @@ public class JbpmPreprocessingUnit implements IDiagramPreprocessingUnit {
 
             Repository repository = profile.getRepository();
 
-            String uuid = req.getParameter("uuid");
+            String uuid = UriUtils.base64Decode(req.getParameter("uuid"));
+
+
             //createAssetIfNotExisting(repository, "/defaultPackage", "BPMN2-SampleProcess", "bpmn2", getBytesFromFile(new File(sampleBpmn2)));
 
             Asset<String> asset = repository.loadAsset(uuid);
@@ -701,6 +703,8 @@ public class JbpmPreprocessingUnit implements IDiagramPreprocessingUnit {
 
         return null;
     }
+
+
 
     private class ThemeInfo {
         private String bgColor;

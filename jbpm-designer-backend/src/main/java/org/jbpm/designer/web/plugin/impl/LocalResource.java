@@ -52,7 +52,8 @@ public class LocalResource {
         try {
             return new FileInputStream(_path);
         } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException(e);
+//            throw new IllegalArgumentException(e);
         }
+        return null;
     }
 }

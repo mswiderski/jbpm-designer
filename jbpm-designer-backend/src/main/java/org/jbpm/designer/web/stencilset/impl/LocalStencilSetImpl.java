@@ -43,8 +43,9 @@ public class LocalStencilSetImpl extends LocalResource implements IDiagramStenci
         try {
             return new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException(e);
+//            throw new IllegalArgumentException(e);
         }
+        return null;
     }
     
 }

@@ -1,6 +1,7 @@
 package org.jbpm.designer.server.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -8,6 +9,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -19,6 +21,7 @@ import org.jbpm.designer.repository.Repository;
 import org.jbpm.designer.repository.impl.AssetBuilder;
 import org.jbpm.designer.service.BPMN2DataServices;
 import org.jbpm.designer.service.DesignerAssetService;
+import org.jbpm.designer.util.Base64Backport;
 import org.jbpm.designer.util.OSProtocolSocketFactory;
 import org.json.JSONArray;
 import org.uberfire.backend.server.util.Paths;
@@ -113,7 +116,15 @@ public class DefaultDesignerAssetService implements DesignerAssetService {
 
         Map<String, String> editorParamsMap = new HashMap<String, String>();
         editorParamsMap.put("hostinfo", hostInfo);
-        editorParamsMap.put("uuid", path.toURI());
+        String uuidtext = path.toURI();
+        if (!Base64Backport.isBase64(uuidtext)) {
+            try {
+                uuidtext = Base64.encodeBase64URLSafeString(uuidtext.getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        editorParamsMap.put("uuid", uuidtext);
         editorParamsMap.put("profile", "jbpm");
         editorParamsMap.put("pp", "");
         editorParamsMap.put("editorid", editorID);
