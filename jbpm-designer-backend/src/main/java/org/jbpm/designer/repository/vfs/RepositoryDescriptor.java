@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
@@ -12,6 +11,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jbpm.designer.server.service.PathEvent;
+import org.jbpm.designer.util.Utils;
 import org.uberfire.java.nio.file.FileSystem;
 import org.uberfire.java.nio.file.Path;
 
@@ -88,7 +88,7 @@ public class  RepositoryDescriptor {
         String repositoryAlias = "";
         if (!this.configured) {
 
-            String uuid = httpRequest.get().getParameter("uuid");
+            String uuid = Utils.getUUID(httpRequest.get());
             if (uuid == null) {
                 uuid = httpRequest.get().getParameter("assetId");
             }

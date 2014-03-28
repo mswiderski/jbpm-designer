@@ -1,6 +1,7 @@
 package org.jbpm.designer.web.server;
 
 import org.apache.commons.codec.binary.Base64;
+import org.jbpm.designer.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jbpm.designer.repository.Asset;
@@ -71,7 +72,7 @@ public class TaskFormsEditorServlet extends HttpServlet {
 	 @Override
 	 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		 String action = req.getParameter("action");
-	     String uuid = req.getParameter("uuid");
+	     String uuid = Utils.getUUID(req);
 	     String profileName = req.getParameter("profile");
 	     String taskName = req.getParameter("taskname");
 	     String taskFormValue = req.getParameter("tfvalue");

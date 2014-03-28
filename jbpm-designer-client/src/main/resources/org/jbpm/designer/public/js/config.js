@@ -36,7 +36,7 @@ ORYX.CONFIG.UUID_URL = function(uuid, profile) {
   }
 
 
-  return ORYX.PATH + "uuidRepository?uuid="+ uuid + "&profile=" + profile + "&pp=" + ORYX.PREPROCESSING + "&ts=" + new Date().getTime();
+  return ORYX.PATH + "uuidRepository?uuid="+ window.btoa(encodeURI(uuid)) + "&profile=" + profile + "&pp=" + ORYX.PREPROCESSING + "&ts=" + new Date().getTime();
 };
 
 ORYX.FULL_PERSPECTIVE = "http://b3mn.org/stencilset/bpmn2.0#";

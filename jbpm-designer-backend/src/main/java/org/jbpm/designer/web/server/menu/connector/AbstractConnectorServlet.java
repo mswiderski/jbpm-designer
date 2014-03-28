@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
+import org.jbpm.designer.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jbpm.designer.repository.Asset;
@@ -50,7 +51,7 @@ public abstract class AbstractConnectorServlet extends HttpServlet {
 
     protected void initializeDefaultRepo(IDiagramProfile profile, Repository repository, HttpServletRequest request) throws Exception {
         String sampleBpmn2 = getServletContext().getRealPath("/defaults/SampleProcess.bpmn2");
-        String uuid = request.getParameter("uuid");
+        String uuid = Utils.getUUID(request);
         createAssetIfNotExisting(repository, "/defaultPackage", "BPMN2-SampleProcess", "bpmn2", getBytesFromFile(new File(sampleBpmn2)));
         if(profile.getRepositoryGlobalDir( uuid ) != null) {
             createDirectoryIfNotExist(repository, profile.getRepositoryGlobalDir( uuid ));
